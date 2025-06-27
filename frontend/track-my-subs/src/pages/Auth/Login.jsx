@@ -65,12 +65,13 @@ const Login = () => {
             <Input
             value={password}
             onChange={({ target }) => setPassword(target.value)}
-            placeholder="*******"
+            placeholder="●●●●●●"
             type="password"
           />
           </div>
 
-            {error && <p className="text-red-500 text-xs mb-2.5">{error}</p>}
+          {error && <p className="text-red-500 text-xs mb-2.5">{error}</p>}
+          
           <button
             type="submit"
             className="w-full py-3 bg-[#7f5af0] hover:bg-[#6841e6] transition-colors duration-300 rounded-lg font-bold text-white shadow-lg shadow-[#7f5af0]/40">
@@ -78,8 +79,8 @@ const Login = () => {
           </button>
 
           <p className="text-sm text-center text-gray-500 mt-4">
-            Need an account?{" "}
-            <a href="#" className="text-[#7f5af0] hover:underline">Join us</a>
+             Don't have an account?{" "}
+            <Link className="text-[#7f5af0] hover:underline" to="/signup">Sign Up</Link>
           </p>
         </form>
       </div>
