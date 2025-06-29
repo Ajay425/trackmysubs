@@ -2,14 +2,30 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
 import { validateEmail } from '../../utils/helper';
+import ProfilePhotoSelector from '../../components/Inputs/ProfilePictureSelector';
+
+const getPasswordStrength = (password) => {
+  let score = 0;
+  if (password.length >= 8) score++;
+  if (/[A-Z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
+  if (/[^A-Za-z0-9]/.test(password)) score++;
+
+  if (score <= 1) return { label: 'Weak', color: 'text-red-500' };
+  if (score === 2 || score === 3) return { label: 'Medium', color: 'text-yellow-400' };
+  return { label: 'Strong', color: 'text-green-500' };
+};
 
 const SignUp = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [profilePic, setProfilePic] = useState(null);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const strength = getPasswordStrength(password);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -26,6 +42,11 @@ const SignUp = () => {
 
     if (!password || password.length < 8) {
       setError('Password must be at least 8 characters.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
       return;
     }
 
@@ -56,6 +77,11 @@ const SignUp = () => {
           Sign Up
         </h2>
 
+       <div className="flex flex-col items-center mb-6">
+         <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+        <p className="mt-2 text-sm text-gray-400">Upload Photo</p>
+      </div>
+
         <form onSubmit={handleSignUp} className="space-y-5">
           <div>
             <label className="block mb-1 text-sm font-semibold text-gray-400">Full Name</label>
@@ -82,6 +108,21 @@ const SignUp = () => {
             <Input
               value={password}
               onChange={({ target }) => setPassword(target.value)}
+              placeholder="●●●●●●"
+              type="password"
+            />
+            {password && (
+              <p className={`mt-1 text-xs font-medium ${strength.color}`}>
+                Strength: {strength.label}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-semibold text-gray-400">Confirm Password</label>
+            <Input
+              value={confirmPassword}
+              onChange={({ target }) => setConfirmPassword(target.value)}
               placeholder="●●●●●●"
               type="password"
             />
