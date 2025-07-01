@@ -9,6 +9,13 @@ html, body {
 }
 
 @layer utilities {
+
+  @layer utilities {
+  .font-trackmysubs {
+    font-family: 'Fira Code', monospace;
+  }
+}
+
   /* blinking cursor */
   @keyframes blink {
     0%, 100% {
@@ -29,7 +36,7 @@ html, body {
       transform: translateX(-100%);
     }
     100% {
-      transform: translate(250%);
+      transform: translateX(250%);
     }
   }
 
@@ -52,9 +59,13 @@ html, body {
   .animate-fadeIn {
     animation: fadeIn 0.8s ease-out forwards;
   }
+
+  /* neon glowing text effect */
   .neon-text {
     text-shadow:
       0 0 4px #a78bfa66,   /* lighter purple glow */
       0 0 8px #7c3aed33;   /* reduced strength */
   }
 }
+
+

@@ -72,7 +72,7 @@ const SignUp = () => {
       </div>
 
       {/* sign up card */}
-      <div className="z-10 backdrop-blur-2xl bg-black/40 border border-white/10 p-10 rounded-2xl w-full max-w-md shadow-[0_0_50px_rgba(127,90,240,0.2)] animate-fadeIn">
+      <div className="z-10 backdrop-blur-2xl bg-black/40 border border-white/10 p-10 rounded-2xl w-full max-w-2xl shadow-[0_0_50px_rgba(127,90,240,0.2)] animate-fadeIn">
         <h2 className="text-2xl font-bold text-center mb-6 text-[#7f5af0] tracking-wide">
           Sign Up
         </h2>
