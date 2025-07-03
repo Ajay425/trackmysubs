@@ -5,6 +5,7 @@ const path = require("path");
 const { connect } = require("http2");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const subscriptionRoutes = require("./routes/subscriptionRoutes");
 
 const app = express();
 
@@ -19,12 +20,14 @@ app.use(
 )
 
 connectDB();
+app.use(express.json());
+
 
 app.use("/api/v1/auth", authRoutes);
+app.use("//api/v1/subscriptions", subscriptionRoutes);
 
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use(express.json());
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

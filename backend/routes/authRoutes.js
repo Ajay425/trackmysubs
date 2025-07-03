@@ -1,18 +1,19 @@
 const express = require("express");
-const { protect } = require("../middleware/authMiddleware");
+const { protect } = require("../middlewares/authMiddlewares");
 
 const {
   registerUser,
   loginUser,
   getUserInfo,
-} = require("../controller/authController");
-const upload = require("../middleware/uploadMiddleware");
+} = require("../controllers/authController");
+const upload = require("../middlewares/uploadMiddlewares");
 
 const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/getUser", protect, getUserInfo);
+
 
 router.post("/upload-image", upload.single("image"), (req, res) => {
   if (!req.file) {
