@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LoadingScreen } from './components/LoadingScreen';
 import Login from './pages/Auth/Login';
 import SignUp from './pages/Auth/SignUp';
+import Home from './pages/Dashboard/Home';
 import './App.css';
 import './index.css';
 
@@ -19,8 +20,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        {/* Future routes like dashboard, signup, etc. go here */}
         <Route path="/signUp" exact element = {<SignUp/>} />
+        <Route path="/Home" exact element={<Home />} />
+        {/* Add more routes as needed */}
       </Routes>
     </Router>
   );
