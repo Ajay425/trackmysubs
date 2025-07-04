@@ -22,9 +22,13 @@ app.use(
 connectDB();
 app.use(express.json());
 
+console.log('authRoutes is', typeof authRoutes);          // should print 'function'
+console.log('subscriptionRoutes is', typeof subscriptionRoutes);
+
+
 
 app.use("/api/v1/auth", authRoutes);
-app.use("//api/v1/subscriptions", subscriptionRoutes);
+app.use("/api/v1/subscriptions", subscriptionRoutes);
 
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
