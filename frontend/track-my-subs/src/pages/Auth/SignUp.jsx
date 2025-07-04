@@ -52,6 +52,7 @@ const SignUp = () => {
 
     setError('');
     // Sign Up API Call (TODO)
+    navigate('/Home'); // Redirect to Home after successful sign up
   };
 
   return (
