@@ -131,11 +131,11 @@ const SignUp = () => {
 
           {error && <p className="text-red-500 text-xs mb-2.5">{error}</p>}
 
-          <button
-            type="submit"
-            className="w-full py-3 bg-[#7f5af0] hover:bg-[#6841e6] transition-colors duration-300 rounded-lg font-bold text-white shadow-lg shadow-[#7f5af0]/40"
-          >
-            SIGN UP
+          <button type="submit" className="button w-full mb-2">
+            <span className="button_lg">
+              <span className="button_fill"></span>
+              <span className="button_text">SIGN UP</span>
+            </span>
           </button>
 
           <p className="text-sm text-center text-gray-500 mt-4">
@@ -144,6 +144,94 @@ const SignUp = () => {
           </p>
         </form>
       </div>
+      {/* Custom Animations & Button Styles */}
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.4; }
+        }
+        .animate-pulse {
+          animation: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .button {
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          appearance: none;
+          border: none;
+          background: none;
+          color: #0f1923;
+          cursor: pointer;
+          position: relative;
+          padding: 8px;
+          margin-bottom: 20px;
+          text-transform: uppercase;
+          font-weight: bold;
+          font-size: 14px;
+          transition: all .15s ease;
+          outline: none;
+        }
+        .button::before,
+        .button::after {
+          content: '';
+          display: block;
+          position: absolute;
+          right: 0;
+          left: 0;
+          height: calc(50% - 5px);
+          border: 1px solid #7D8082;
+          transition: all .15s ease;
+        }
+        .button::before {
+          top: 0;
+          border-bottom-width: 0;
+        }
+        .button::after {
+          bottom: 0;
+          border-top-width: 0;
+        }
+        .button:active::before,
+        .button:active::after {
+          right: 3px;
+          left: 3px;
+        }
+        .button:active::before {
+          top: 3px;
+        }
+        .button:active::after {
+          bottom: 3px;
+        }
+        .button_lg {
+          position: relative;
+          display: block;
+          padding: 10px 20px;
+          color: #fff;
+          background-color: #1a1a1a;
+          overflow: hidden;
+          box-shadow: inset 0px 0px 0px 1px transparent;
+          z-index: 2;
+        }
+        .button_fill {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 0%;
+          height: 100%;
+          background: linear-gradient(90deg, #7f5af0 0%, #6841e6 100%);
+          z-index: 1;
+          transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .button:hover .button_fill {
+          width: 100%;
+        }
+        .button_text {
+          position: relative;
+          z-index: 2;
+          transition: color 0.2s;
+        }
+        .button:hover .button_text {
+          color: #fff;
+        }
+      `}</style>
     </div>
   );
 };
