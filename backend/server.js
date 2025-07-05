@@ -29,6 +29,7 @@ console.log('subscriptionRoutes is', typeof subscriptionRoutes);
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/subscriptions", subscriptionRoutes);
+app.use("/api/v1/dashboard", require("./routes/dashboardRoutes"));
 
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
