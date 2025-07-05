@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
 import { validateEmail } from '../../utils/helper'; 
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -23,12 +25,34 @@ const Login = () => {
       return;
     }
 
-    setError('');
+    setError("");
     // Login API Call (TODO)
+    try {
+      // Simulate API call
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email,
+        password
+      });
+      const { user, token } = response.data;
+      // Store user info and token in localStorage
+      if (token) {
+        localStorage.setItem('token',token);
+        navigate('/Home'); // Redirect to Home after successful login
+
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('An error occurred while logging in. Please try again.');
+      }
+    }
+
   };
+
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#1a1a1a] text-white flex flex-col items-center justify-center overflow-hidden px-4">
-      
       {/* background glow */}
       <div className="absolute w-96 h-96 bg-purple-800 rounded-full blur-[160px] opacity-20 top-10 left-10 animate-pulse"></div>
       <div className="absolute w-96 h-96 bg-blue-700 rounded-full blur-[160px] opacity-20 bottom-0 right-0 animate-pulse"></div>
@@ -53,21 +77,21 @@ const Login = () => {
           <div>
             <label className="block mb-1 text-sm font-semibold text-gray-400">Email</label>
             <Input
-            value={email}
-            onChange={({ target }) => setEmail(target.value)}
-            placeholder="john@example.com"
-            type="text"
-          />
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
+              placeholder="john@example.com"
+              type="text"
+            />
           </div>
 
           <div>
             <label className="block mb-1 text-sm font-semibold text-gray-400">Password</label>
             <Input
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-            placeholder="●●●●●●"
-            type="password"
-          />
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+              placeholder="●●●●●●"
+              type="password"
+            />
           </div>
 
           {error && <p className="text-red-500 text-xs mb-2.5">{error}</p>}
@@ -79,7 +103,7 @@ const Login = () => {
           </button>
 
           <p className="text-sm text-center text-gray-500 mt-4">
-             Don't have an account?{" "}
+            Don't have an account?{" "}
             <Link className="text-[#7f5af0] hover:underline" to="/signup">Sign Up</Link>
           </p>
         </form>
