@@ -6,6 +6,7 @@ import SignUp from './pages/Auth/SignUp';
 import Home from './pages/Dashboard/Home';
 import './App.css';
 import './index.css';
+import UserProvider from './context/userContext';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,6 +18,8 @@ function App() {
 
   // After loading, show the app with routing
   return (
+    <UserProvider>
+    <div>
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -25,6 +28,8 @@ function App() {
         {/* Add more routes as needed */}
       </Routes>
     </Router>
+    </div>
+    </UserProvider>
   );
 }
 

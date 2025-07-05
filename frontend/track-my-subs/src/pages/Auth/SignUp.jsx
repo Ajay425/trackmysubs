@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
 import { validateEmail } from '../../utils/helper';
 import ProfilePhotoSelector from '../../components/Inputs/ProfilePictureSelector';
+import axios from 'axios';
+import { API_PATHS } from '../../utils/apiPaths';
+import { UserContext } from '../../context/userContext'; // Import UserContext
 
 const getPasswordStrength = (password) => {
   let score = 0;
@@ -20,9 +23,10 @@ const SignUp = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
   const [profilePic, setProfilePic] = useState(null);
   const [error, setError] = useState(null);
+  const { udateUser } = useContext(UserContext); // Assuming you have a UserContext to update user info
 
   const navigate = useNavigate();
   const strength = getPasswordStrength(password);
@@ -45,14 +49,39 @@ const SignUp = () => {
       return;
     }
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
+
 
     setError('');
     // Sign Up API Call (TODO)
-    navigate('/Home'); // Redirect to Home after successful sign up
+    try {
+
+      if (profilePic) {
+        const imgUploadRes = await upload(profilePic);
+        profileImageUrl = imgUploadRes.Url || "" ; // Assuming upload returns an object with a url property
+
+      }
+
+      const response = await axios.post(API_PATHS.AUTH.REGISTER, {
+        fullName,
+        email,
+        password,
+        profileImageUrl
+      });
+
+      const { user, token } = response.data;
+
+      if (token) {
+        localStorage.setItem('token', token);
+        udateUser(user); // Assuming you have a context or state management to update user info
+        navigate('/Home'); // Redirect to Home after successful sign up
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('An error occurred while signing up. Please try again.');
+      }
+    }
   };
 
   return (
@@ -119,15 +148,7 @@ const SignUp = () => {
             )}
           </div>
 
-          <div>
-            <label className="block mb-1 text-sm font-semibold text-gray-400">Confirm Password</label>
-            <Input
-              value={confirmPassword}
-              onChange={({ target }) => setConfirmPassword(target.value)}
-              placeholder="●●●●●●"
-              type="password"
-            />
-          </div>
+
 
           {error && <p className="text-red-500 text-xs mb-2.5">{error}</p>}
 
