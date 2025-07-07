@@ -8,6 +8,8 @@ const generateToken = (id) => {
 };
 
 exports.registerUser = async (req, res) => {
+    console.log("registerUser endpoint hit"); // <- Add this
+
     const {fullName, email, password, profileImageUrl} = req.body;
 
     if (!fullName || !email || !password){
@@ -33,6 +35,7 @@ exports.registerUser = async (req, res) => {
         token: generateToken(user._id),
     });
     }catch (err) {
+        console.error("Signup Error:", err);
         res.status(500).json({message:"Error registering user", error:err.message})
     }
 

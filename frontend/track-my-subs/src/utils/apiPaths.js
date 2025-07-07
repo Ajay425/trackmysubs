@@ -20,6 +20,6 @@ export const API_PATHS = {
   },
 
   IMAGE: {
-    UPLOAD: "/api/v1/image/upload-image",
+    UPLOAD: "/api/v1/auth/upload-image",
   },
 };

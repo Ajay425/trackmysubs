@@ -6,6 +6,9 @@ import ProfilePhotoSelector from '../../components/Inputs/ProfilePictureSelector
 import axios from 'axios';
 import { API_PATHS } from '../../utils/apiPaths';
 import { UserContext } from '../../context/userContext'; // Import UserContext
+import axiosInstance from '../../utils/axiosInstance';
+import uploadImage from '../../utils/uploadImage';
+
 
 const getPasswordStrength = (password) => {
   let score = 0;
@@ -26,7 +29,7 @@ const SignUp = () => {
   // const [confirmPassword, setConfirmPassword] = useState('');
   const [profilePic, setProfilePic] = useState(null);
   const [error, setError] = useState(null);
-  const { udateUser } = useContext(UserContext); // Assuming you have a UserContext to update user info
+  const { updateUser } = useContext(UserContext); // Assuming you have a UserContext to update user info
 
   const navigate = useNavigate();
   const strength = getPasswordStrength(password);
@@ -52,16 +55,17 @@ const SignUp = () => {
 
 
     setError('');
+    let profileImageUrl = "";
     // Sign Up API Call (TODO)
     try {
 
       if (profilePic) {
-        const imgUploadRes = await upload(profilePic);
-        profileImageUrl = imgUploadRes.Url || "" ; // Assuming upload returns an object with a url property
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || "" ; // Assuming upload returns an object with a url property
 
       }
 
-      const response = await axios.post(API_PATHS.AUTH.REGISTER, {
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
         fullName,
         email,
         password,
@@ -72,13 +76,14 @@ const SignUp = () => {
 
       if (token) {
         localStorage.setItem('token', token);
-        udateUser(user); // Assuming you have a context or state management to update user info
+        updateUser(user); // Assuming you have a context or state management to update user info
         navigate('/Home'); // Redirect to Home after successful sign up
       }
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
       } else {
+        console.error("Sign Up Error:", error);
         setError('An error occurred while signing up. Please try again.');
       }
     }

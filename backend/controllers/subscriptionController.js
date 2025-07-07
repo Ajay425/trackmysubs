@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const Subscription = require('../models/Subscription');
+const Subscription = require('../models/subscription');
 
 // Add Subscription  Source
 exports.addSubscription = async (req, res) => {
