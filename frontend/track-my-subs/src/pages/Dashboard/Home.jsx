@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FiPlus, FiEdit, FiTrash2, FiMenu } from "react-icons/fi";
 import NewSubscriptionModal from "./NewSubscriptionModal";
 import Sidebar from "../../components/Sidebar";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { toast } from "react-toastify";
-
+import { useUserAuth } from "../../hooks/useUserAuth"; // Custom hook for user authentication
 
 const Dashboard = () => {
+  useUserAuth(); // Call the custom hook to ensure user is authenticated
   const [subscriptions, setSubscriptions] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [newlyAddedId, setNewlyAddedId] = useState(null);
@@ -30,11 +31,6 @@ const Dashboard = () => {
   }
 };
 
-  
-
-
-
-
   useEffect(() => {
     fetchSubscriptions();
   }, []);
@@ -46,13 +42,15 @@ const Dashboard = () => {
    const handleAddSubscription = async (sub) => {
     // Simulate API call to add subscription
      const {
-      name,
-      price,
-      billingCycle,
-      renewalDate,
-      status = "active", // Default status
-      reminderDaysBeforeEnd,
-      notes,
+        id,
+        name,
+        price,
+        billingCycle,
+        startDate,
+        endDate,
+        reminderDaysBeforeEnd,
+        status,
+        notes 
     } = sub;
 
     if (!name || !price || !billingCycle) {
@@ -68,13 +66,15 @@ const Dashboard = () => {
 
     try {
       await axiosInstance.post(API_PATHS.SUBSCRIPTIONS.CREATE, {
+        id,
         name,
-        price,
+        price: parseFloat(price),
         billingCycle,
-        renewalDate,
-        status,
+        startDate,
+        endDate,
         reminderDaysBeforeEnd,
-        notes,
+        status,
+        notes 
       });
       setModalOpen(false);
       toast.success("Subscription added successfully!");
@@ -84,6 +84,21 @@ const Dashboard = () => {
       console.error("Error adding subscription:", error.response?.data || error.message);
     }
   };
+
+  // Delete subscription function 
+   const handleDeleteSubscription = async (id) => {
+    try {
+      await axiosInstance.delete(API_PATHS.SUBSCRIPTIONS.DELETE(id));
+      toast.success("Subscription deleted successfully!");
+      fetchSubscriptions(); // Refresh subscriptions after deletion
+    } catch (error) {
+      console.error("Error deleting subscription:", error.response?.data || error.message);
+      toast.error("Failed to delete subscription.");
+    }
+   }
+
+  // Edit subscription function (not implemented in this example)
+
 
   return (
     <div className="flex min-h-screen bg-[#0a0a0a] text-white relative">
@@ -112,7 +127,7 @@ const Dashboard = () => {
         <div className="relative z-10 max-w-6xl mx-auto space-y-8">
           {/* Header */}
           <div className="text-center animate-fadeZoom">
-            <h1 className="text-4xl font-bold text-[#7f5af0] neon-text">Your Dashboard</h1>
+            <h1 className="text-4xl font-bold text-[#7f5af0] neon-text mb-2">Your Dashboard</h1>
             <p className="text-gray-400 mt-2">Manage all your subscriptions in one place.</p>
           </div>
 
@@ -172,7 +187,7 @@ const Dashboard = () => {
                     <button className="hover:text-blue-400">
                       <FiEdit />
                     </button>
-                    <button className="hover:text-red-500">
+                    <button className="hover:text-red-500" onClick={() => handleDeleteSubscription(sub._id)}>
                       <FiTrash2 />
                     </button>
                   </div>
