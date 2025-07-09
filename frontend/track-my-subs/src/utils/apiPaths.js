@@ -12,12 +12,13 @@ export const API_PATHS = {
   },
 
   SUBSCRIPTIONS: {
-  GET_ALL: "/api/v1/subscriptions/get-subscriptions",                // GET
-  GET_BY_ID: (id) => `/api/v1/subscriptions/get-subscriptions/${id}`, // (optional) if you ever implement it
-  CREATE: "/api/v1/subscriptions/add-subscription",                  // POST
-  UPDATE: (id) => `/api/v1/subscriptions/update-subscription/${id}`, // PUT
-  DELETE: (id) => `/api/v1/subscriptions/delete-subscription/${id}`, // DELETE
+    GET_ALL: "/api/v1/subscriptions",                   // GET
+    GET_BY_ID: (id) => `/api/v1/subscriptions/${id}`,   // GET
+    CREATE: "/api/v1/subscriptions",                    // POST
+    UPDATE: (id) => `/api/v1/subscriptions/${id}`,      // PUT
+    DELETE: (id) => `/api/v1/subscriptions/${id}`,      // DELETE
   },
+
   IMAGE: {
     UPLOAD: "/api/v1/auth/upload-image",
   },
