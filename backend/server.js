@@ -6,6 +6,10 @@ const { connect } = require("http2");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
+const startEmailReminderJob = require("./utils/cronJobs");
+const sendEmail = require("./utils/sendEmail");
+
+
 
 const app = express();
 
@@ -21,7 +25,6 @@ app.use(
 
 connectDB();
 app.use(express.json());
-
 console.log('authRoutes is', typeof authRoutes);          // should print 'function'
 console.log('subscriptionRoutes is', typeof subscriptionRoutes);
 
@@ -30,6 +33,14 @@ console.log('subscriptionRoutes is', typeof subscriptionRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/subscriptions", subscriptionRoutes);
 app.use("/api/v1/dashboard", require("./routes/dashboardRoutes"));
+
+
+startEmailReminderJob(); // Start the cron job for sending reminders
+sendEmail({
+  to: "ajaybn2@gmail.com",
+  subject: "Test Email",
+  message: "If you're reading this, it works!",
+});
 
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
