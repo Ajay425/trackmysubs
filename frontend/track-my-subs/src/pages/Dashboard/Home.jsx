@@ -6,6 +6,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { toast } from "react-toastify";
 import { useUserAuth } from "../../hooks/useUserAuth"; // Custom hook for user authentication
+import EditSubscriptionModal from "./editSubscriptionModal";
 
 const Dashboard = () => {
   useUserAuth(); // Call the custom hook to ensure user is authenticated
@@ -13,6 +14,14 @@ const Dashboard = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [newlyAddedId, setNewlyAddedId] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true); // 👈 sidebar toggle
+  const [selectedSub, setSelectedSub] = useState(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+
+  const openEditModal = (sub) => {
+  setSelectedSub(sub);
+  setEditModalOpen(true);
+}
+
 
  
   const fetchSubscriptions = async () => {
@@ -38,6 +47,9 @@ const Dashboard = () => {
   useEffect(() => {
   console.log("Updated subscriptions:", subscriptions);
 }, [subscriptions]);
+
+
+  
 
    const handleAddSubscription = async (sub) => {
     // Simulate API call to add subscription
@@ -98,6 +110,17 @@ const Dashboard = () => {
    }
 
   // Edit subscription function (not implemented in this example)
+
+  const handleEditSubscription = async (id, updatedData) => {
+    try {
+      const response = await axiosInstance.put(API_PATHS.SUBSCRIPTIONS.UPDATE(id), updatedData);
+      toast.success("Subscription updated successfully!");
+      fetchSubscriptions(); // Refresh subscriptions after update
+    } catch (error) {
+      console.error("Error updating subscription:", error.response?.data || error.message);
+      toast.error("Failed to update subscription.");
+    }
+  }
 
 
   return (
@@ -184,9 +207,20 @@ const Dashboard = () => {
                     </p>
                   </div>
                   <div className="flex gap-3 text-gray-400">
-                    <button className="hover:text-blue-400">
-                      <FiEdit />
+                    <button className="hover:text-blue-400"
+                      onClick={() => {
+                        setSelectedSub(sub);
+                        setEditModalOpen(true);
+                      }}
+                    >
+                      <FiEdit/>
                     </button>
+                    <EditSubscriptionModal
+                      isOpen={editModalOpen}
+                      onClose={() => setEditModalOpen(false)}
+                      subscription={selectedSub}
+                      onUpdate={handleEditSubscription}
+                    />
                     <button className="hover:text-red-500" onClick={() => handleDeleteSubscription(sub._id)}>
                       <FiTrash2 />
                     </button>
