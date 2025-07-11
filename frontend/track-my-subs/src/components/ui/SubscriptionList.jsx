@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiPlus, FiEdit, FiTrash2 } from "react-icons/fi";
-import NewSubscriptionModal from "./NewSubscriptionModal";
-import EditSubscriptionModal from "./editSubscriptionModal";
+import NewSubscriptionModal from "../../pages/Dashboard/NewSubscriptionModal";
+import EditSubscriptionModal from "../../pages/Dashboard/editSubscriptionModal";
 
 
 const SubscriptionList = ({
