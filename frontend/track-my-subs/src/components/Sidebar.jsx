@@ -2,6 +2,8 @@ import React from "react";
 import { FiX, FiHome, FiPlus, FiSettings, FiLogOut, FiHelpCircle  } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 
+const PROFILE_PIC_URL = "/uploads/default-profile.png"; // Change to dynamic/user image if available
+
 const Sidebar = ({ onClose }) => {
   const navigate = useNavigate();
 
@@ -20,6 +22,16 @@ const Sidebar = ({ onClose }) => {
             <FiX />
           </button>
         )}
+      </div>
+
+      {/* Profile Picture */}
+      <div className="flex flex-col items-center mb-8">
+        <img
+          src={PROFILE_PIC_URL}
+          alt="Profile"
+          className="w-20 h-20 rounded-full border-2 border-[#7f5af0] shadow-md object-cover mb-2"
+        />
+        <span className="text-sm text-gray-400">Your Profile</span>
       </div>
 
       {/* Nav Links and Logout */}
