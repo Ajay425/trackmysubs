@@ -22,6 +22,17 @@ const Sidebar = ({ onClose }) => {
         )}
       </div>
 
+      {/* Profile Picture */}
+      <div className="flex flex-col items-center mb-8">
+        <img
+          src={"/src/assets/profile-default.png"}
+          alt="Profile"
+          className="w-20 h-20 rounded-full border-2 border-[#7f5af0] object-cover mb-2 shadow"
+          style={{ background: '#181818' }}
+        />
+        <span className="text-gray-400 text-sm">Your Profile</span>
+      </div>
+
       {/* Nav Links and Logout */}
       <div className="flex flex-col justify-between flex-1">
         <nav className="flex flex-col space-y-4">
@@ -38,13 +49,13 @@ const Sidebar = ({ onClose }) => {
             Settings
           </Link>
           <Link to="/faq" className="flex items-center gap-2 text-gray-300 hover:text-white">
-          <FiHelpCircle />
-              FAQ
+            <FiHelpCircle />
+            FAQ
           </Link>
         </nav>
 
         {/* Logout Button */}
-        <div className="pt-8">
+        <div className="pt-8 mt-auto">
           <button
             className="flex items-center gap-2 text-gray-300 hover:text-red-500 w-full px-4 py-2 rounded transition justify-center"
             onClick={handleLogout}
