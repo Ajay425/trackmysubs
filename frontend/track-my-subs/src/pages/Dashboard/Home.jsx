@@ -133,7 +133,7 @@ const Dashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-6 relative">
+      <div className="flex-1 p-6 relative" style={{ marginLeft:180}}>
         {/* Sidebar Toggle */}
         {!sidebarOpen && (
         <button
