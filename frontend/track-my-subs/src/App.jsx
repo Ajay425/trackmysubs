@@ -8,6 +8,7 @@ import './App.css';
 import './index.css';
 import UserProvider from './context/userContext';
 import Faq from './pages/Dashboard/faq';
+import Settings from './pages/Dashboard/Settings';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -27,6 +28,7 @@ function App() {
         <Route path="/signUp" exact element = {<SignUp/>} />
         <Route path="/Home" exact element={<Home />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/settings" element={<Settings />} />
         {/* Add more routes as needed */}
       </Routes>
     </Router>
