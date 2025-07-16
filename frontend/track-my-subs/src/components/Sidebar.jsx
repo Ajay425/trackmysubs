@@ -40,10 +40,7 @@ const Sidebar = ({ onClose }) => {
             <FiHome />
             Dashboard
           </Link>
-          <Link to="/add-subscription" className="flex items-center gap-2 text-gray-300 hover:text-white">
-            <FiPlus />
-            Add Subscription
-          </Link>
+
           <Link to="/settings" className="flex items-center gap-2 text-gray-300 hover:text-white">
             <FiSettings />
             Settings
