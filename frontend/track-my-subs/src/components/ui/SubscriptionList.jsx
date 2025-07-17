@@ -23,7 +23,7 @@ const SubscriptionList = ({
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
+      transition={{ delay: 1.9, duration: 0.7, ease: "easeIn" }}
       className="bg-black/40 border border-white/10 rounded-xl p-6 backdrop-blur-md shadow-md"
     >
       <div className="flex justify-between items-center mb-4">
