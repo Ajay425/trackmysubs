@@ -1,23 +1,28 @@
-import {useRef, React, useState} from "react";
+import { useRef, useState, useContext } from "react";
 import { FiX, FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { SIDE_MENU_DATA } from "../utils/data";
+import { UserContext } from "../context/UserContext";
+import { LuUser } from "react-icons/lu";
 
 const Sidebar = ({ onClose }) => {
   const navigate = useNavigate();
-  const inputRef = useRef(null);
-  const [profilePic, setProfilePic] = useState(null);
+  // Removed profile picture editing feature
+
+  const { user } = useContext(UserContext); // Access user from context
+  const userProfilePic = user?.profileImage || null;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const preview = URL.createObjectURL(file);
-      setProfilePic(preview);
+      const previewUrl = URL.createObjectURL(file);
+      setPreview(previewUrl);
+      // Optionally upload to backend here
     }
   };
 
@@ -37,32 +42,27 @@ const Sidebar = ({ onClose }) => {
         )}
       </div>
 
-      {/* Profile Picture Upload */}
+      {/* Profile Picture Display Only */}
       <div className="flex flex-col items-center mb-8">
-        <div className="relative cursor-pointer" onClick={handleChooseFile}>
+        {userProfilePic ? (
           <img
-            src={profilePic || "/default-avatar.png"}
+            src={userProfilePic}
             alt="Profile"
             className="w-20 h-20 rounded-full object-cover border-2 border-[#7f5af0]"
           />
-          <input
-            type="file"
-            ref={inputRef}
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-          />
-          <div className="absolute bottom-0 right-0 bg-[#7f5af0] p-1 rounded-full text-white text-xs">
-            ✎
+        ) : (
+          <div className="w-20 h-20 rounded-full bg-gray-800 border-2 border-[#7f5af0] flex items-center justify-center">
+            <LuUser className="text-white text-3xl" />
           </div>
-        </div>
-        <p className="mt-3 text-white font-semibold text-center text-sm">Ajay Bukkaraya</p>
+        )}
+        <p className="mt-3 text-white font-semibold text-center text-sm">
+          {user?.fullName || "Welcome!"}
+        </p>
       </div>
 
-      {/* Menu + Logout */}
+      {/* Menu */}
       <div className="flex flex-col justify-between flex-1">
         <nav className="flex flex-col space-y-4">
-
           {SIDE_MENU_DATA.map(({ id, label, path, icon: Icon }) => (
             <Link
               key={id}
