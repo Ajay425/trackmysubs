@@ -16,7 +16,6 @@ router.get("/getUser", protect, getUserInfo);
 
 // ✅ Paste it here — below the auth routes
 router.post("/upload-image", upload.single("image"), (req, res) => {
-  console.log("✅ Upload route hit");
 
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
