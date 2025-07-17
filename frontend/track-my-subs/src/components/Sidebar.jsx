@@ -10,26 +10,37 @@ const Sidebar = ({ onClose }) => {
   // Removed profile picture editing feature
 
   const { user } = useContext(UserContext); // Access user from context
-  const userProfilePic = user?.profileImage || null;
+  const [preview, setPreview] = useState(null);
+
+ 
+
+
+  const userProfilePic = user?.profileImageUrl || null;
+
+
+  console.log("Current user in context:", user);
+  console.log("Using profile image:", userProfilePic);
+  console.log("Profile URL string:", typeof user?.profileImageUrl, user?.profileImageUrl);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setPreview(previewUrl);
-      // Optionally upload to backend here
-    }
-  };
+  const handleImageChange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-  const handleChooseFile = () => {
-    inputRef.current.click();
-  };
+  try {
+    const updatedUser = await uploadImage(file);
+    console.log("Updated user after image upload:", updatedUser); // 👀
 
+    updateUser(updatedUser);
+    setPreview(null);
+  } catch (err) {
+    console.error("Failed to upload image:", err);
+  }
+};
   return (
     <aside className="w-64 bg-[#101010] border-r border-white/10 p-6 flex flex-col h-screen">
       {/* Header */}
