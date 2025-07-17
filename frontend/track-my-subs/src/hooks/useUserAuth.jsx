@@ -20,8 +20,9 @@ export const useUserAuth = () => {
         const fetchUserInfo = async () => {
             try {
                 const response = await axiosInstance.get(API_PATHS.AUTH.GET_USER);
+                console.log("GET_USER response:", response); // 👀 log everything
                 if (isMounted && response.data) {
-                    updateUser(response.data.user); // Update user context with fetched user data
+                    updateUser(response.data); // Update user context with fetched user data
                 }
             } catch (error) {
                 console.error("Error fetching user data:", error);
