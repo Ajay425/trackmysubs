@@ -9,8 +9,12 @@ const Faq = ({ onCloseSidebar }) => {
       answer: "TrackMySubs is a simple tool to manage and get reminded of all your subscriptions in one place.",
     },
     {
+      question: "Is Trackmysubs free?",
+      answer: "Yes, TrackMySubs is completely free to use. You can add, edit, and delete how many subscriptions you want without any cost. All I ask for is a star on GitHub to support the project!",
+    },
+    {
       question: "How do I add a subscription?",
-      answer: "Go to the 'Add Subscription' page from the sidebar and fill out the form.",
+      answer: "Click on add New button on your dashboard and fill out the form.",
     },
     {
       question: "How can I get notified before a subscription renews?",
@@ -18,7 +22,12 @@ const Faq = ({ onCloseSidebar }) => {
     },
     {
       question: "How do I reset my password?",
-      answer: "Currently, password reset functionality is not available. Please contact support for help.",
+      answer: "You can reset ypur password in the settings page found on the sidebar."
+      ,
+    },
+    {
+      question: "Is my data secure?",
+      answer: "Yes, your data is stored securely and is only accessible by you.",
     },
   ];
 
