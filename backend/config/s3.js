@@ -22,10 +22,5 @@ const upload = multer({
   }),
 });
 
-console.log("✅ AWS S3 CONFIG:", {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID?.slice(0, 4) + "****",
-  secret: process.env.AWS_SECRET_ACCESS_KEY ? "✔️" : "❌ MISSING",
-  region: process.env.AWS_REGION,
-});
 
 module.exports = { upload, s3 };
