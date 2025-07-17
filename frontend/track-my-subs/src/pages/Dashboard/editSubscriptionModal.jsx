@@ -62,7 +62,7 @@ const EditSubscriptionModal = ({ isOpen, onClose, onUpdate, subscription }) => {
             label="Billing Cycle"
             value={billingCycle}
             onChange={(e) => setBillingCycle(e.target.value)}
-            options={["Monthly", "Quarterly", "Bi-Annually", "Yearly", "One-Time"]}
+            options={["Monthly", "Quarterly", "Bi-Annually", "Yearly"]}
             required
           />
           <Input
