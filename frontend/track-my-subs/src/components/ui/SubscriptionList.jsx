@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DeleteModal from "./DeleteModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiPlus, FiEdit, FiTrash2 } from "react-icons/fi";
 import NewSubscriptionModal from "../../pages/Dashboard/NewSubscriptionModal";
@@ -19,6 +20,7 @@ const SubscriptionList = ({
   handleDeleteSubscription,
 }) => {
   const [hovered, setHovered] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState({ open: false, sub: null });
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -89,10 +91,19 @@ const SubscriptionList = ({
                 />
                 <button
                   className="hover:text-red-500"
-                  onClick={() => handleDeleteSubscription(sub._id)}
+                  onClick={() => setConfirmDelete({ open: true, sub })}
                 >
                   <FiTrash2 />
                 </button>
+      <DeleteModal
+        open={confirmDelete.open}
+        subName={confirmDelete.sub?.name}
+        onCancel={() => setConfirmDelete({ open: false, sub: null })}
+        onConfirm={() => {
+          handleDeleteSubscription(confirmDelete.sub._id);
+          setConfirmDelete({ open: false, sub: null });
+        }}
+      />
               </div>
             </motion.div>
           ))}
