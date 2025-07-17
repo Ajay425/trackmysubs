@@ -7,6 +7,7 @@ import Home from './pages/Dashboard/Home';
 import './App.css';
 import './index.css';
 import UserProvider from './context/userContext';
+import AuthInit from './hooks/authInit';
 import Faq from './pages/Dashboard/faq';
 import Settings from './pages/Dashboard/Settings';
 
