@@ -12,8 +12,6 @@ exports.protect = async (req, res ,next) => {
     } catch (err) {
         res.status(401).json({message: "Not  authorized, token failed"});
     }
-    console.log("Header:", req.headers.authorization);
-    console.log("Token:", token);
-    console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
 };
 
