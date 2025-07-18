@@ -21,6 +21,4 @@ const upload = multer({
     },
   }),
 });
-
-
 module.exports = { upload, s3 };
