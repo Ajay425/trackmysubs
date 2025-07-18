@@ -17,10 +17,10 @@ const Sidebar = ({ onClose }) => {
 
   const userProfilePic = user?.profileImageUrl || null;
 
-
   console.log("Current user in context:", user);
   console.log("Using profile image:", userProfilePic);
   console.log("Profile URL string:", typeof user?.profileImageUrl, user?.profileImageUrl);
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");
