@@ -112,10 +112,7 @@ const SignUp = () => {
           Sign Up
         </h2>
 
-       <div className="flex flex-col items-center mb-6">
-         <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
-        <p className="mt-2 text-sm text-gray-400">Upload Photo</p>
-      </div>
+
 
         <form onSubmit={handleSignUp} className="space-y-5">
           <div>
